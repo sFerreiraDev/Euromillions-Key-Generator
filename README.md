@@ -1,6 +1,9 @@
 # Euromillions Key Generator
 A really simple extension that uses euromillions statistics to
-generate a random key. All methods used here are really dumb and silly,
+generate a random key.
+
+All methods used here are really dumb and silly.
+
 I'm just a lazy person who wanted a random key generator with slitly more **imaginary** odds =D
 
 Only works in this [link](https://www.jogossantacasa.pt/web/SCEstatisticas/) for now...
@@ -15,7 +18,7 @@ Only works in this [link](https://www.jogossantacasa.pt/web/SCEstatisticas/) for
 
 ## TODO:
 * [x] Create sily logic for better imaginary odds
-* [x] Create an first iteration raw extension
+* [x] Create a first iteration raw extension
 * [ ] Figure out a way to have the code splitted in different files and better file structure (modular type)
   * [ ] Consider using [link](https://github.com/narralabs/brackets) to allow
 * [ ] Improve the UI
