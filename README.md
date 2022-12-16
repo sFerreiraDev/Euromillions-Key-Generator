@@ -6,12 +6,12 @@ I'm just a lazy person who wanted a random key generator with slitly more **imag
 Only works in this [link](https://www.jogossantacasa.pt/web/SCEstatisticas/) for now...
 
 ## **DISCLAIMER**
-**Be aware of the odds of the euromillions game before you play it!**
-**This is just a project made for fun with the only goal of not have to thinking on a key for euromillions!**
-**This does not increase your odds of winning euromillions!**
-**This will not make make you win more at euromillions!**
-**This can not and/or should not be used as an incentive to make you play more at euromillions!**
-**This can not be accountable for any amount of money that the user might loose by playing on euromillions!**
+* **Be aware of the odds of the euromillions game before you play it!**
+* **This is just a project made for fun with the only goal of not have to thinking on a key for euromillions!**
+* **This does not increase your odds of winning euromillions!**
+* **This will not make make you win more at euromillions!**
+* **This can not and/or should not be used as an incentive to make you play more at euromillions!**
+* **This can not be accountable for any amount of money that the user might loose by playing on euromillions!**
 
 ## TODO:
 * [x] Create sily logic for better imaginary odds
