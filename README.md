@@ -25,9 +25,9 @@ Only works in this [link](https://www.jogossantacasa.pt/web/SCEstatisticas/) for
 * [ ] ...
 
 ### Feel free to anything!
-Feel free to use it,
-Feel free to drop sugestions to improve it,
-Feel free to colaborate with me on it,
-Or just feel free to just roast the code or any of the sily logic. =D
+* Feel free to use it,
+* Feel free to drop sugestions to improve it,
+* Feel free to colaborate with me on it,
+* Or just feel free to just roast the code or any of the sily logic. =D
 
 GitHub [link](https://github.com/sFerreiraDev/Euromillions-Key-Generator)
