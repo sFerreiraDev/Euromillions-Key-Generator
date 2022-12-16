@@ -14,15 +14,15 @@ Only works in this [link](https://www.jogossantacasa.pt/web/SCEstatisticas/) for
 **This can not be accountable for any amount of money that the user might loose by playing on euromillions!**
 
 ## TODO:
-  [x] Create sily logic for better imaginary odds
-  [x] Create an first iteration raw extension
-  [ ] Figure out a way to have the code splitted in different files and better file structure (modular type)
-      [ ] Consider using [link](https://github.com/narralabs/brackets) to allow
-  [ ] Improve the UI
-  [ ] Use real statistics methods / models
-  [ ] Use other source for statistics data so it doesn't require to be in any specific page
-  [ ] (Maybe?) Generate more than one key
-  [ ] ...
+* [x] Create sily logic for better imaginary odds
+* [x] Create an first iteration raw extension
+* [ ] Figure out a way to have the code splitted in different files and better file structure (modular type)
+  * [ ] Consider using [link](https://github.com/narralabs/brackets) to allow
+* [ ] Improve the UI
+* [ ] Use real statistics methods / models
+* [ ] Use other source for statistics data so it doesn't require to be in any specific page
+* [ ] (Maybe?) Generate more than one key
+* [ ] ...
 
 ### Feel free to anything!
 Feel free to use it,
@@ -30,4 +30,4 @@ Feel free to drop sugestions to improve it,
 Feel free to colaborate with me on it,
 Or just feel free to just roast the code or any of the sily logic. =D
 
-GitHub [link](#)
+GitHub [link](https://github.com/sFerreiraDev/Euromillions-Key-Generator)
