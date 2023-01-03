@@ -24,7 +24,8 @@ Only works in this [link](https://www.jogossantacasa.pt/web/SCEstatisticas/) for
 * [ ] Improve the UI
 * [ ] Use real statistics methods / models
 * [ ] Use other source for statistics data so it doesn't require to be in any specific page
-* [ ] (Maybe?) Generate more than one key
+* [x] Work also for Totoloto
+* [x] (Maybe?) Generate more than one key
 * [ ] ...
 
 ### Feel free to anything!
