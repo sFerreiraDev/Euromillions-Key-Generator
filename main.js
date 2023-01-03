@@ -1,48 +1,39 @@
 'use strict';
 
 /**
- * CONFIGS
+ * STATE HANDLER
  */
-const statisticsSource = 'https://www.jogossantacasa.pt/web/SCEstatisticas/';
-const STORAGE_KEY = 'euromillions_ext';
 
-/**
- * MAIN
-*/
-const body = document.getElementsByTagName("body")[0];
-const mainElem = createMainContainer(body);
-
-let flatKey = getFlatKey();
-
-if (!flatKey.length) {
-    mainElem.innerText = `Click here to load key!`
-} else {
+const getStateToSave = (flatKey) => {
     const now = new Date();
-    const IDS = ['num1', 'num2', 'num3', 'num4', 'num5', 'star1', 'star2'];
-    const allNumberElems = IDS.map(id => createNumberContainer(mainElem, id));
-    allNumberElems.forEach((elem, i) => elem.innerText = flatKey[i]);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({lastKey: flatKey, date: now.toDateString()}));
+    return JSON.stringify({ lastKey: flatKey, date: now.toDateString() });
 }
 
-function getFlatKey() {
-    const fromStorage = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    let key = fromStorage?.lastKey;
+const getDataFromState = (state) => {
+    return JSON.parse(state);
+}
 
-    if (!key) {
-        const data = getData("stripped betMiddle sixcol");
-        if (!data) return [];
+const getKeyFromState = (state) => {
+    const maybeKey = getDataFromState(state)?.lastKey;
+    return maybeKey;
+}
 
-        const [nums, stars] = gemerateKey(data);
-        key = [...nums, ...stars];
-    }
+/**
+ * STORAGE SERVICE
+ */
 
-    return key;
+const getData = (path) => {
+    return localStorage.getItem(path);
+}
+
+const setData = (path, data) => {
+    localStorage.setItem(path, data);
 }
 
 /**
  * DATA FETCHER ADAPTER
  */
-function getData(selector) {
+function getStatisticData(selector) {
     const SPLITTER = '|';
     let tableData = document.getElementsByClassName(selector);
     if (!tableData.length) return null;
@@ -64,34 +55,30 @@ function createRow(rowData) {
     }
 }
 
-// date string should be on format DD/MM/YYYY
-function stringToDate(date) {
-    const dayMontYear = date.split('/').map(s => +s);
-    let result = new Date();
-    result.setHours(0,0,0,0);
-    result.setDate(dayMontYear[0]);
-    result.setMonth(dayMontYear[1] - 1);
-    result.setFullYear(dayMontYear[2]);
-    return result;
-}
-
 /**
  * UI LOGIC
  */
-function createMainContainer(body) {
-    const ID = 'mainContainer';
+function createMainContainer(body, id) {
+    const ID = id;
 
     let elem = document.createElement('div');
-    elem.addEventListener('click', function navigateToSource() {
-        localStorage.removeItem(STORAGE_KEY);
-        window.location.href = statisticsSource;
-    });
+
     elem.id = ID;
     elem.classList.add('flex-center')
 
     body.appendChild(elem);
     return elem;
 } 
+
+function createWrapper(mainElem, wrapperClass, clickFn) {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add(...['flex-center', wrapperClass])
+
+    wrapper.addEventListener('click', clickFn);
+
+    mainElem.appendChild(wrapper);
+    return wrapper;
+}
 
 function createNumberContainer(mainElem, id) {
     const CLASS = id.substring(0, id.length - 1);
@@ -106,6 +93,15 @@ function createNumberContainer(mainElem, id) {
 
 function addStyles(elem, styles) {
     Object.entries(styles).forEach(([prop, value]) => elem.style[prop] = value);
+}
+
+const wrapperClickHandler = (mainElem, statisticsSource, storageKey) => {
+    localStorage.removeItem(storageKey);
+    if (window.location.href !== statisticsSource) {
+        window.location.href = statisticsSource;
+    } else {
+        appendKey(mainElem);
+    }
 }
 
 /**
@@ -127,7 +123,7 @@ function addStyles(elem, styles) {
  *   starsData: Array<ValueData>,
  * }
  */
-function gemerateKey(allData)  {
+function gemerateKey(allData, howManyNumbers, howManyStars)  {
     if (!allData) return [];
     const result = Object.entries(allData).reduce((acc, [key, data]) => {
         // create the magic bag
@@ -138,7 +134,7 @@ function gemerateKey(allData)  {
         if (errMsg) throw errMsg;
 
         // pick values
-        const pickHowMany = key === 'numbersData' ? 5 : 2
+        const pickHowMany = key === 'numbersData' ? howManyNumbers : howManyStars
         const pickedValues = getNDiffValuesFromMagicBag(magicBag, pickHowMany);
         return [...acc, pickedValues];
     }, []);
@@ -273,4 +269,88 @@ function getRandomInt(max) {
 
 function removeAllFromArray(array, value) {
     return array.filter(n => n !== value);
+}
+
+// date string should be on format DD/MM/YYYY
+function stringToDate(date) {
+    const dayMontYear = date.split('/').map(s => +s);
+    let result = new Date();
+    result.setHours(0,0,0,0);
+    result.setDate(dayMontYear[0]);
+    result.setMonth(dayMontYear[1] - 1);
+    result.setFullYear(dayMontYear[2]);
+    return result;
+}
+
+/**
+ * CONFIGS
+ */
+const statisticsSourceEuro = 'https://www.jogossantacasa.pt/web/SCEstatisticas/';
+const statisticsSourceTotoloto = 'https://www.jogossantacasa.pt/web/SCEstatisticas/totolotoN';
+const EURO_STORAGE_KEY = 'euromillions_ext';
+const TOTOLOTO_STORAGE_KEY = 'totoloto_ext';
+const MAIN_CONTAINER_ID = 'mainContainer';
+const MAIN_WRAPPER_CLASS = 'mainWrapper';
+
+/**
+ * MAIN
+*/
+const body = document.getElementsByTagName("body")[0];
+const mainElem = createMainContainer(body, MAIN_CONTAINER_ID);
+appendKey(mainElem);
+
+function appendKey(mainElem) {
+    const isTotoloto = isTotolotoUrl(window.location.href);
+    const statisticsSource = isTotoloto ? statisticsSourceTotoloto : statisticsSourceEuro;
+    const storageKey = isTotoloto ? TOTOLOTO_STORAGE_KEY : EURO_STORAGE_KEY;
+
+    const mainClickHandlerFn = () => wrapperClickHandler(mainElem, statisticsSource, storageKey)
+    const mainElemWrapper = createWrapper(mainElem, MAIN_WRAPPER_CLASS, mainClickHandlerFn);
+    
+    let flatKey = getFlatKey(isTotoloto, storageKey);
+    
+    if (!flatKey.length) {
+        mainElemWrapper.innerText = `Click here to generate a new key!`
+    } else {
+        const IDS = ['num1', 'num2', 'num3', 'num4', 'num5', 'star1'];
+        if (!isTotoloto) IDS.push('star2');
+
+        IDS.map((id, i) => {
+            const elem = createNumberContainer(mainElemWrapper, id);
+            elem.innerText = flatKey[i];
+            return elem;
+        });
+
+        setLastKey(storageKey, flatKey);
+    }
+}
+
+function getFlatKey(isTotoloto, storageKey) {
+    let key = getLastKey(storageKey);
+
+    if (!key) {
+        const data = getStatisticData("stripped betMiddle sixcol");
+        if (!data) return [];
+        const numbersAmount = 5;
+        const starsAmount = isTotoloto ? 1 : 2;
+
+        const [nums, stars] = gemerateKey(data, numbersAmount, starsAmount);
+        key = [...nums, ...stars];
+    }
+
+    return key;
+}
+
+function isTotolotoUrl(currentUrl) {
+    return currentUrl.toLowerCase().includes('totoloto');
+}
+
+function getLastKey(storageKey) {
+    const state = getData(storageKey);
+    return getKeyFromState(state);
+}
+
+function setLastKey(storageKey, flatKey) {
+    const newState = getStateToSave(flatKey);
+    setData(storageKey, newState);
 }

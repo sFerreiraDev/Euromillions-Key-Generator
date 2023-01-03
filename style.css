@@ -21,14 +21,18 @@
 
 #mainContainer {
     position: fixed;
-    height: 50px;
-    width: 300px;
     top: 0;
     right: 0;
+    flex-direction: column;
+    z-index: 1000; /* to go above the search bar */
+}
+
+.mainWrapper {
+    width: 300px;
+    justify-content: space-evenly;
     padding: 10px;
     border: 1px solid black;
     border-radius: 5px;
-    justify-content: space-evenly;
     cursor: pointer;
     background-color: white;
 }
