@@ -81,11 +81,11 @@ function createWrapper(mainElem, wrapperClass, clickFn) {
 }
 
 function createNumberContainer(mainElem, id) {
-    const CLASS = id.substring(0, id.length - 1);
+    const elemClass = `euromillions-ext-${id.substring(0, id.length - 1)}`;
 
     let elem = document.createElement('div');
     elem.id = id;
-    elem.classList.add(...['flex-center', CLASS]);
+    elem.classList.add(...['flex-center', elemClass]);
 
     mainElem.appendChild(elem);
     return elem

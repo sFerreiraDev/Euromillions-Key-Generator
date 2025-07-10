@@ -1,15 +1,15 @@
-.star,
-.num {
+.euromillions-ext-star,
+.euromillions-ext-num {
     height: 40px;
     width: 30px;
     border-radius: 5px;
 }
 
-.num {
+.euromillions-ext-num {
     border: 1px solid gray;
 }
 
-.star {
+.euromillions-ext-star {
     border: 1px solid goldenrod;
 }
 
